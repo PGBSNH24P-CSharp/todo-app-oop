@@ -23,6 +23,14 @@ public abstract class Menu {
         string[] commandArgs = input.Split(" ");
         string commandName = commandArgs[0];
 
+        if (commandName.Equals("help")) {
+            foreach (Command command in commands) {
+                Console.WriteLine(command.Name + " - " + command.GetDescription());
+            }
+
+            return;
+        }
+
         foreach (Command command in commands) {
             if (command.Name.Equals(commandName)) {
                 command.Execute(commandArgs);

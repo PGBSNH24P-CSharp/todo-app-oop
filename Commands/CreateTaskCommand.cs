@@ -8,6 +8,11 @@ public class CreateTaskCommand : Command
     {
     }
 
+    public override string GetDescription()
+    {
+        return "Create a task";
+    }
+
     public override void Execute(string[] commandArgs)
     {
         if (commandArgs.Length != 2)

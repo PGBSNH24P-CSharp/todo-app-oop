@@ -6,6 +6,11 @@ public class RemoveTaskCommand : Command
     {
     }
 
+    public override string GetDescription()
+    {
+        return "Remove a task";
+    }
+
     public override void Execute(string[] commandArgs)
     {
         if (commandArgs.Length != 2) {

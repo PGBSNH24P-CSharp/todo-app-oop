@@ -39,4 +39,5 @@ public abstract class Command {
     // och därför läggs den in som abstract metod
     public abstract void Execute(string[] commandArgs);
 
+    public abstract string GetDescription();
 }

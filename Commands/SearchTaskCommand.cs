@@ -4,6 +4,11 @@ public class SearchTaskCommand : Command
     {
     }
 
+    public override string GetDescription()
+    {
+        return "Search for a task by title.";
+    }
+
     public override void Execute(string[] commandArgs)
     {
         if (commandArgs.Length != 2) {
