@@ -18,6 +18,9 @@ Todo applikation
 - Schemalägga todos (med påminnelser)
     - Olika typer av tasks
 
+// Simpla tasks (enkel deadline)
+// Upprepande tasks (varje vecka)
+
 Klasser:
 - Task
 - Calender
@@ -37,6 +40,7 @@ public class Program
     public Program()
     {
         this.MenuManager = new SimpleMenuManager(new UserMenu(this));
+        Console.WriteLine("'file' or 'list':");
         string choice = Console.ReadLine()!;
         if (choice.Equals("file"))
         {

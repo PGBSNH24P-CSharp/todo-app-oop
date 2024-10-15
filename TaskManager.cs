@@ -12,12 +12,7 @@ public class FileTaskManager : TaskManager
 {
     public void Save(Task task)
     {
-        string serializedTask = task.Title;
-        serializedTask += "," + task.Description;
-        serializedTask += "," + task.Label;
-        serializedTask += "," + task.Completed;
-        serializedTask += "," + task.CreationDate;
-        serializedTask += "," + task.DeadlineDate;
+        string serializedTask = task.Serialize();
 
         File.WriteAllText("tasks/" + task.Title, serializedTask);
     }
@@ -40,17 +35,36 @@ public class FileTaskManager : TaskManager
             string fileContent = File.ReadAllText("tasks/" + title);
             string[] parts = fileContent.Split(",");
 
-            Task task = new Task {
-                Title = parts[0],
-                Description = parts[1],
-                Label = parts[2],
-                Completed = parts[3].Equals("True"),
-                // TODO: Convert dates
-                CreationDate = DateTime.Now,
-                DeadlineDate = DateTime.Now,
-            };
+            string taskType = parts[1];
+            if (taskType.Equals("simple"))
+            {
+                return new SimpleTask
+                {
+                    Title = parts[0],
+                    Description = parts[2],
+                    Label = parts[3],
+                    Completed = parts[4].Equals("True"),
+                    // TODO: Convert dates
+                    CreationDate = DateTime.Now,
+                    DeadlineDate = DateTime.Now,
+                };
+            }
+            else if (taskType.Equals("repeating"))
+            {
+                return new RepeatingTask
+                {
+                    Title = parts[0],
+                    Description = parts[2],
+                    Label = parts[3],
+                    Completed = parts[4].Equals("True"),
+                    // TODO: Convert dates
+                    CreationDate = DateTime.Now,
+                    Day = DayOfWeek.Monday,
+                    TimeOfDay = TimeOnly.MinValue,
+                };
+            }
 
-            return task;
+            return null;
         }
         catch (Exception e)
         {
@@ -80,12 +94,14 @@ public class ListTaskManager : TaskManager
 
     public Task? GetTask(string title)
     {
-        foreach (Task task in tasks) {
-            if (task.Title.Equals(title)) {
+        foreach (Task task in tasks)
+        {
+            if (task.Title.Equals(title))
+            {
                 return task;
             }
         }
 
         return null;
-    }    
+    }
 }
